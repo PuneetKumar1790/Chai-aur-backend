@@ -48,7 +48,7 @@ const userSchema=new Schema({
 //PRE HOOK
 userSchema.pre("save",async function (next){
     if(!this.isModified("password")) return next //paswrd only modified when user will chage or set 
-    this.password=bcrypt.hash(this.password,10)//hashing through bcrypt for paswrd
+    this.password=await bcrypt.hash(this.password,10)//hashing through bcrypt for paswrd takes time
     next()
 })//not use arrow function here 
 userSchema.method.isPasswordCorrect=async function(password){ //setting user defined method
