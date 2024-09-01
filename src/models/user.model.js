@@ -1,4 +1,5 @@
-import mongoose,{Schema} from "mongoose";    
+import mongoose,{Schema} from "mongoose";   
+import jwt from "jsonwebtoken" 
 import bcrypt from "bcrypt" 
 const userSchema=new Schema({
     username:{
@@ -52,7 +53,7 @@ userSchema.pre("save",async function (next){
     this.password=await bcrypt.hash(this.password,10)//hashing through bcrypt for paswrd takes time
     next()
 })//not use arrow function here 
-userSchema.method.isPasswordCorrect=async function(password){ //setting user defined method
+userSchema.methods.isPasswordCorrect=async function(password){ //setting user defined method
     return await bcrypt.compare(password,this.password) // true or false 
 
 }
